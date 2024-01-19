@@ -1,29 +1,17 @@
 import express from "express";
-import Hotel from "../models/Hotel.js";
+import { createHotel, deleteHotel, getHotel, getHotels, updateHotel } from "../controllers/hotel.js";
+import { createError } from "../utils/error.js";
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post("/", createHotel);
 
-    const newHotel = new Hotel(req.body);
+router.put("/:id",updateHotel);
 
-    try {
-        const savedHotel = await newHotel.save();
-        res.status(200).json(savedHotel);
-    } catch (err) {
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
+router.delete("/:id",deleteHotel);
 
-router.put("/:id", async (req, res) => {
+router.get("/:id", getHotel);
 
-    try {
-        const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id , {$set: req.body},{new:true})
-        res.status(200).json(updatedHotel);
-    } catch (err) {
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
+router.get("/", getHotels);
 
 export default router;
