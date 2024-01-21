@@ -1,8 +1,7 @@
 # Restaurant Booking App
 
 ## Overview
-UVMBooking App
-This is a restaurant booking app developed using the MERN stack (MongoDB, Express.js, React, Node.js). The application allows users to reserve rooms at a restaurant.
+UVMBooking App -- This is a restaurant booking app developed using the MERN stack (MongoDB, Express.js, React, Node.js). The application allows users to reserve rooms at a restaurant.
 
 ## Features
 - User authentication (Sign up, Log in, Log out)
