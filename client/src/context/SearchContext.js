@@ -1,9 +1,9 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 
 const INITIAL_STATE = {
   city: undefined,
-  dates: [],
-  options: {
+  dates: JSON.parse(localStorage.getItem("dates")) || [],
+  options: JSON.parse(localStorage.getItem("options")) || {
     adult: undefined,
     children: undefined,
     room: undefined,
@@ -23,21 +23,26 @@ const SearchReducer = (state, action) => {
   }
 };
 
-export const SearchContextProvider = ({ children }) => {
+export const SearchContextProvider = ({children}) =>{
   const [state, dispatch] = useReducer(SearchReducer, INITIAL_STATE);
+  
+  useEffect(()=>{
+      localStorage.setItem("dates", JSON.stringify(state.dates));
+  }, [state.dates]);
+  
+  useEffect(()=>{
+      localStorage.setItem("options", JSON.stringify(state.options));
+  }, [state.options]);
 
   return (
-    <SearchContext.Provider
-      value={{
-        city: state.city,
-        dates: state.dates,
-        options: state.options,
-        dispatch,
-      }}
-    >
-      {children}
-    </SearchContext.Provider>
-  );
+      <SearchContext.Provider value = {{
+          city: state.city, 
+          dates: state.dates, 
+          options: state.options, 
+          dispatch}}>
+          {children}
+      </SearchContext.Provider>
+  )
 };
 
 
